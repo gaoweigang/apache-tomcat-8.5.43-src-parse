@@ -178,7 +178,7 @@ public class MbeansDescriptorsDigesterSource extends ModelerSource
             // Process the input file to configure our registry
             try {
                 // Push our registry object onto the stack
-                digester.push(loadedMbeans);//设置对象栈Object stack的顶部对象为ArrayList,而对象ArrayList有个add方法
+                digester.push(loadedMbeans);//设置对象栈Object stack的顶部对象为ArrayList,而对象ArrayList有个add方法，将MBean添加到ArrayList中
                 digester.parse(stream);
             } catch (Exception e) {
                 log.error("Error digesting Registry data", e);
@@ -188,7 +188,7 @@ public class MbeansDescriptorsDigesterSource extends ModelerSource
             }
 
         }
-        //将
+        //将ManagedBean与Registry关联
         for (ManagedBean loadedMbean : loadedMbeans) {
             registry.addManagedBean(loadedMbean);
         }
