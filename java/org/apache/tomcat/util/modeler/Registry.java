@@ -584,8 +584,10 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
         if( sourceType==null ) {//指定sourceType的默认类型是MbeansDescriptorsDigesterSource
             sourceType="MbeansDescriptorsDigesterSource";
         }
-        //加载MbeansDescriptorsDigesterSource类，并创建MbeansDescriptorsDigesterSource类的实例
+        //加载MbeansDescriptorsDigesterSource类，并创建MbeansDescriptorsDigesterSource类的实例, MbeansDescriptorsDigesterSource继承了ModelerSource
         ModelerSource ds=getModelerSource(sourceType);
+        //1.type : org.apache.tomcat.util.modeler.modules.MbeansDescriptorsDigesterSource
+        //2.inputsource 从mbeans-descriptors.xml资源读取数据
         List<ObjectName> mbeans =
             ds.loadDescriptors(this, type, inputsource);
 

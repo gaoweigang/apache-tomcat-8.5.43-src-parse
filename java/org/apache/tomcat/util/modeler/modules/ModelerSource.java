@@ -32,10 +32,11 @@ public abstract class ModelerSource {
      * Load data, returns a list of items.
      *
      * @param registry The registry
-     * @param type The bean registry type
-     * @param source Introspected object or some other source
+     * @param type The bean registry type， type的值可以是org.apache.tomcat.util.modeler.modules.MbeansDescriptorsDigesterSource
+     * @param source Introspected object or some other source， source的类型可以是InputStream ,从mbeans-descriptors.xml资源读取数据
      * @return a list of object names
      * @throws Exception Error loading descriptors
+     *
      */
     public abstract List<ObjectName> loadDescriptors(Registry registry,
             String type, Object source) throws Exception;
