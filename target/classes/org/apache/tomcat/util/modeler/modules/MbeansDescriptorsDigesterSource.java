@@ -31,6 +31,9 @@ import org.apache.tomcat.util.digester.Digester;
 import org.apache.tomcat.util.modeler.ManagedBean;
 import org.apache.tomcat.util.modeler.Registry;
 
+/**
+ * 使用commons Digester 解析 mbeans-descriptors.xml 文件
+ */
 public class MbeansDescriptorsDigesterSource extends ModelerSource
 {
     private static final Log log =
@@ -58,6 +61,7 @@ public class MbeansDescriptorsDigesterSource extends ModelerSource
             "org.apache.tomcat.util.modeler.ManagedBean");
         digester.addSetProperties
             ("mbeans-descriptors/mbean");
+        //调用对象ArrayList的add方法，将ManagedBean对象添加进集合ArrayList中
         digester.addSetNext
             ("mbeans-descriptors/mbean",
                 "add",
@@ -140,9 +144,18 @@ public class MbeansDescriptorsDigesterSource extends ModelerSource
         this.source=source;
     }
 
+    /**
+     * @param registry The registry
+     * @param type The bean registry type， type的值可以是org.apache.tomcat.util.modeler.modules.MbeansDescriptorsDigesterSource
+     * @param source Introspected object or some other source， source的类型可以是InputStream ,从mbeans-descriptors.xml资源读取数据
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<ObjectName> loadDescriptors( Registry registry, String type,
             Object source) throws Exception {
+        //对于每个MBean,会在mbean描述符文件中写出MBean类和托管资源类的完全限定名(分别由className和type指定)，此外还有由MBean暴露的属性和方法。
+        //然后，使用Registry实例读取这个XML文档，并创建一个MBeanServer实例，在按照mbean描述符文件mbeans-descriptors.xml中的XML元素创建所有的ManagedBean实例。
         setRegistry(registry);
         setSource(source);
         execute();
@@ -159,13 +172,13 @@ public class MbeansDescriptorsDigesterSource extends ModelerSource
         ArrayList<ManagedBean> loadedMbeans = new ArrayList<>();
         synchronized(dLock) {
             if (digester == null) {
-                digester = createDigester();
+                digester = createDigester();//配置解析规则
             }
 
             // Process the input file to configure our registry
             try {
                 // Push our registry object onto the stack
-                digester.push(loadedMbeans);
+                digester.push(loadedMbeans);//设置对象栈Object stack的顶部对象为ArrayList,而对象ArrayList有个add方法，将MBean添加到ArrayList中
                 digester.parse(stream);
             } catch (Exception e) {
                 log.error("Error digesting Registry data", e);
@@ -175,6 +188,7 @@ public class MbeansDescriptorsDigesterSource extends ModelerSource
             }
 
         }
+        //将ManagedBean与Registry关联
         for (ManagedBean loadedMbean : loadedMbeans) {
             registry.addManagedBean(loadedMbean);
         }

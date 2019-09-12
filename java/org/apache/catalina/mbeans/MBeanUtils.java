@@ -66,16 +66,17 @@ public class MBeanUtils {
 
 
     /**
-     * The configuration information registry for our managed beans.
+     * The configuration information registry for our managed beans. MBeanUtils类的class文件首次加载的时候就会执行createRegistry()方法初始化静态变量
      */
     private static Registry registry = createRegistry();
 
 
     /**
      * The <code>MBeanServer</code> for this application.
-     * MBeanUtils类的class文件首次加载的时候就会执行createServer()方法
+     * MBeanUtils类的class文件首次加载的时候就会执行createServer()方法初始化静态变量
      */
     private static MBeanServer mserver = createServer();
+
 
 
     // --------------------------------------------------------- Static Methods
@@ -369,6 +370,8 @@ public class MBeanUtils {
         throws MalformedObjectNameException {
 
         ObjectName name = null;
+        //返回给定String的引用形式，即在原来的字符串前面和后面加双引号，适合包含在ObjectName中。返回的值可以用作与ObjectName中的键相关联的值。
+        //参数s可能包含任何字符。 适当的引用确保返回的值在ObjectName中是合法的。
         String quotedResourceName = ObjectName.quote(resource.getName());
         Object container =
                 resource.getNamingResources().getContainer();

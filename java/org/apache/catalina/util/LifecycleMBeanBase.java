@@ -159,7 +159,7 @@ public abstract class LifecycleMBeanBase extends LifecycleBase
 
         try {
             on = new ObjectName(name.toString());
-
+            //通过ManagedBean创建动态MBean,并将MBean注册到MBeanServer
             Registry.getRegistry(null, null).registerComponent(obj, on, null);
         } catch (MalformedObjectNameException e) {
             log.warn(sm.getString("lifecycleMBeanBase.registerFail", obj, name),

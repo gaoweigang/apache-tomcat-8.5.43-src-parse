@@ -334,7 +334,7 @@ public class ManagedBean implements java.io.Serializable {
         // Set the managed resource (if any)
         try {
             if (instance != null)
-                mbean.setManagedResource(instance, "ObjectReference");
+                mbean.setManagedResource(instance, "ObjectReference");//设置被托管的资源
         } catch (InstanceNotFoundException e) {
             throw e;
         }

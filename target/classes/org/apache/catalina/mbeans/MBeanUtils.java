@@ -66,16 +66,17 @@ public class MBeanUtils {
 
 
     /**
-     * The configuration information registry for our managed beans.
+     * The configuration information registry for our managed beans. MBeanUtils类的class文件首次加载的时候就会执行createRegistry()方法初始化静态变量
      */
     private static Registry registry = createRegistry();
 
 
     /**
      * The <code>MBeanServer</code> for this application.
-     * MBeanUtils类的class文件首次加载的时候就会执行createServer()方法
+     * MBeanUtils类的class文件首次加载的时候就会执行createServer()方法初始化静态变量
      */
     private static MBeanServer mserver = createServer();
+
 
 
     // --------------------------------------------------------- Static Methods

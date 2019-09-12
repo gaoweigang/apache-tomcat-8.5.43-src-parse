@@ -607,7 +607,12 @@ public class Catalina {
 
             try {
                 inputSource.setByteStream(inputStream);
-                digester.push(this);
+                digester.push(this);//将当前对象作为对象栈Object stack的顶部元素。常见的还有将集合ArrayList作为顶部元素，ArrayList有add方法
+                /**
+                 * 1.解析server.xml,生成StandardServer
+                 * 2.在解析server.xml会创建GlobalResourcesLifecycleListener对象，该对象在初始话的时候会调用MBeanUtils.createRegistry()创建Registry。
+                 * 3.MBeanUtils类在首次加载内存的收会MBeanUtils.createServer()创建MBeanServer
+                 */
                 digester.parse(inputSource);
             } catch (SAXParseException spe) {
                 log.warn("Catalina.start using " + getConfigFile() + ": " +
